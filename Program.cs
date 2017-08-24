@@ -15,7 +15,7 @@ namespace OWLDataConverter
     /// </remarks>
     class Program
     {
-        public const string PROGRAM_DATE = "August 23, 2017";
+        public const string PROGRAM_DATE = "August 24, 2017";
 
         private static string mInputFilePath;
         private static string mOutputFilePath;
@@ -251,9 +251,9 @@ namespace OWLDataConverter
                 Console.WriteLine("By default the output file includes grandparent terms; remove them with /NoG");
                 Console.WriteLine("Using /NoP auto-enables /NoG");
                 Console.WriteLine();
-                Console.WriteLine("By default the output file will not include the term definitions; include them with /Def");
+                Console.WriteLine("By default the output file will not include the term definitions; include them with /Def or /Definition");
                 Console.WriteLine();
-                Console.WriteLine("By default the output file will not include the term comments; include them with /Com");
+                Console.WriteLine("By default the output file will not include the term comments; include them with /Com or /Comment");
                 Console.WriteLine();
                 Console.WriteLine("Program written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA) in 2017");
                 Console.WriteLine("Version: " + GetAppVersion());
