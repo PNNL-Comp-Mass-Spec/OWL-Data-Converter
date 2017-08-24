@@ -57,4 +57,9 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)README.md" "$(TargetDir)" /D /Y
+xcopy "$(ProjectDir)\docs\bto_excerpt*" "$(TargetDir)" /D /Y
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -7,6 +7,4 @@ build:
   verbosity: minimal
 artifacts:
 - path: bin
-- path: docs\bto_excerpt.owl
-- path: docs\bto_excerpt.txt
   name: OWL-Data-Converter
