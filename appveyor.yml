@@ -1,0 +1,12 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+before_build:
+- cmd: nuget.exe restore OWLDataConverter.sln
+build:
+  project: OWLDataConverter.sln
+  verbosity: minimal
+artifacts:
+- path: bin
+- path: docs\bto_excerpt.owl
+- path: docs\bto_excerpt.txt
+  name: OWL-Data-Converter
