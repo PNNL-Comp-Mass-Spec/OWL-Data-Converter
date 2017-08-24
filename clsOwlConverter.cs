@@ -154,11 +154,12 @@ namespace OWLDataConverter
                                 }
 
                                 break;
+
                             case XmlNodeType.EndElement:
                                 break;
+
                             case XmlNodeType.Text:
                                 // Important text should have already been skipped
-
                                 break;
                         }
                     }
@@ -241,6 +242,11 @@ namespace OWLDataConverter
             string parentTermId,
             string identifier)
         {
+            // Replace the first underscore in the parent term with a colon
+            var firstUnderscore = parentTermId.IndexOf('_');
+            if (firstUnderscore > 0 && firstUnderscore < parentTermId.Length - 1)
+                parentTermId = parentTermId.Substring(0, firstUnderscore) + ':' + parentTermId.Substring(firstUnderscore + 1);
+
             if (parentTerms.ContainsKey(parentTermId))
             {
                 OnWarningEvent("Parent term specified twice; ignoring " + parentTermId + " for line " + identifier);
@@ -395,9 +401,11 @@ namespace OWLDataConverter
                                         OnWarningEvent("Nested owl:Class terms; this is unexpected. See term: " + name);
                                     }
                                     break;
+
                                 case "rdfs:label":
                                     name = xmlReader.ReadInnerXml();
                                     break;
+
                                 case "rdfs:subClassOf":
                                     insideSubClassOf = true;
                                     relationshipType = "part_of";
@@ -457,17 +465,16 @@ namespace OWLDataConverter
 
                                 case "oboInOwl:id":
                                     identifier = xmlReader.ReadInnerXml();
-
                                     break;
-                                case "oboInOwl:hasOBONamespace":
 
+                                case "oboInOwl:hasOBONamespace":
+                                    // Could parse out the name space
                                     break;
 
 
                                 case "oboInOwl:hasRelatedSynonym":
                                     var synonym = xmlReader.ReadInnerXml();
                                     synonyms.Add(synonym);
-
                                     break;
 
                                 case "obo:IAO_0000115":
@@ -490,9 +497,9 @@ namespace OWLDataConverter
                                 termParsed = true;
 
                             break;
+
                         case XmlNodeType.Text:
                             // Important text should have already been skipped
-
                             break;
                     }
 
