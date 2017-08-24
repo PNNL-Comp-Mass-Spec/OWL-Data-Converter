@@ -1,0 +1,60 @@
+Term_PK	Term_Name	Identifier	Is_Leaf	Synonyms	Parent_term_name	Parent_term_ID	GrandParent_term_name	GrandParent_term_ID
+BTO:0000000BTO1	tissues, cell types and enzyme sources	BTO:0000000	1			
+BTO:0000001BTO1	culture condition:-induced cell	BTO:0000001	1			BTO:0000216		
+BTO:0000002BTO1	culture condition:1,4-dichlorobenzene-grown cell	BTO:0000002	1			BTO:0001479		
+BTO:0000003BTO1	intestinal cell line	BTO:0000003	1			BTO:0000648		
+BTO:0000004BTO1	culture condition:2,5-dihydroxybenzoate-grown cell	BTO:0000004	1			BTO:0001479		
+BTO:0000005BTO1	culture condition:2-aminobenzenesulfonate-grown cell	BTO:0000005	1			BTO:0001479		
+BTO:0000006BTO1	osteoblastoma cell	BTO:0000006	1			BTO:0000372		
+BTO:0000006BTO1	osteoblastoma cell	BTO:0000006	1			BTO:0001593		
+BTO:0000007BTO1	HEK-293 cell	BTO:0000007	1	293 cell, A293 cell, A-293 cell, HEK cell, HEK293 cell, human embryonal kidney cell, human embryonic kidney cell		BTO:0000067		
+BTO:0000007BTO1	HEK-293 cell	BTO:0000007	1	293 cell, A293 cell, A-293 cell, HEK cell, HEK293 cell, human embryonal kidney cell, human embryonic kidney cell		BTO:0002733		
+BTO:0000008BTO1	culture condition:3-chlorobenzoate-grown cell	BTO:0000008	1			BTO:0001479		
+BTO:0000009BTO1	culture condition:3-hydroxybenzoate-grown cell	BTO:0000009	1			BTO:0001479		
+BTO:0000010BTO1	culture condition:3-methylcrotonoyl-CoA-grown cell	BTO:0000010	1			BTO:0001479		
+BTO:0000011BTO1	3T3-L1 cell	BTO:0000011	1	NIH3T3-L1 cell		BTO:0000944		
+BTO:0000012BTO1	culture condition:4-(methoxymethyl)phenol-grown cell	BTO:0000012	1			BTO:0001479		
+BTO:0000013BTO1	culture condition:4-chlorophenol-grown cell	BTO:0000013	1			BTO:0001479		
+BTO:0000014BTO1	culture condition:4-hydroxybenzoate-grown cell	BTO:0000014	1			BTO:0001479		
+BTO:0000015BTO1	culture condition:4-methylmuconolactone-grown cell	BTO:0000015	1			BTO:0001479		
+BTO:0000016BTO1	A-172 cell	BTO:0000016	1	A172 cell		BTO:0001530		
+BTO:0000017BTO1	A-431 cell	BTO:0000017	1	A431 cell		BTO:0000297		
+BTO:0000018BTO1	A-549 cell	BTO:0000018	1	A549 cell, NCI-A549 cell		BTO:0004078		
+BTO:0000019BTO1	A7r5 cell	BTO:0000019	1			BTO:0000669		
+BTO:0000019BTO1	A7r5 cell	BTO:0000019	1			BTO:0001200		
+BTO:0000020BTO1	abdomen	BTO:0000020	1	abdominal cavity		BTO:0001493		
+BTO:0000021BTO1	head muscle	BTO:0000021	1			BTO:0001103		
+BTO:0000021BTO1	head muscle	BTO:0000021	1			BTO:0000282		
+BTO:0000022BTO1	abdominal ganglion	BTO:0000022	1	visceral ganglion		BTO:0000497		
+BTO:0000022BTO1	abdominal ganglion	BTO:0000022	1	visceral ganglion		BTO:0001448		
+BTO:0000023BTO1	pectoral muscle	BTO:0000023	1	breast muscle, pectoralis muscle		BTO:0000508		
+BTO:0000024BTO1	abomasum	BTO:0000024	1	fourth stomach		BTO:0001307		
+BTO:0000025BTO1	amniotic cavity	BTO:0000025	1			BTO:0000065		
+BTO:0000026BTO1	culture condition:galactose-grown cell	BTO:0000026	1			BTO:0001479		
+BTO:0000027BTO1	achene	BTO:0000027	1			BTO:0000486		
+BTO:0000028BTO1	pancreatic acinar cell	BTO:0000028	1	exocrine pancreas cell, pancreatic acinus		BTO:0000433		
+BTO:0000028BTO1	pancreatic acinar cell	BTO:0000028	1	exocrine pancreas cell, pancreatic acinus		BTO:0000434		
+BTO:0000029BTO1	adductor longus	BTO:0000029	1	long adductor muscle, musculus adductor longus	adductor	BTO:0000030		BTO:0001367
+BTO:0000029BTO1	adductor longus	BTO:0000029	1	long adductor muscle, musculus adductor longus	adductor	BTO:0000030		BTO:0001376
+BTO:0000030BTO1	adductor	BTO:0000030	0	adductor muscle		BTO:0001367		
+BTO:0000030BTO1	adductor	BTO:0000030	0	adductor muscle		BTO:0001376		
+BTO:0000031BTO1	fruit peduncle	BTO:0000031	1			BTO:0000486		
+BTO:0000032BTO1	colonic adenocarcinoma cell	BTO:0000032	1	adenocarcinoma cell, colon, colon adenocarcinoma cell	colorectal adenocarcinoma cell	BTO:0000035		BTO:0000193
+BTO:0000032BTO1	colonic adenocarcinoma cell	BTO:0000032	1	adenocarcinoma cell, colon, colon adenocarcinoma cell	colorectal adenocarcinoma cell	BTO:0000035		BTO:0000586
+BTO:0000032BTO1	colonic adenocarcinoma cell	BTO:0000032	1	adenocarcinoma cell, colon, colon adenocarcinoma cell	colorectal adenocarcinoma cell	BTO:0000035		BTO:0000604
+BTO:0000033BTO1	SW-403 cell	BTO:0000033	1	SW403 cell		BTO:0001913		
+BTO:0000034BTO1	apical meristem	BTO:0000034	1			BTO:0000852		
+BTO:0000034BTO1	apical meristem	BTO:0000034	1			BTO:0001300		
+BTO:0000034BTO1	apical meristem	BTO:0000034	1			BTO:0001191		
+BTO:0000034BTO1	apical meristem	BTO:0000034	1			BTO:0001188		
+BTO:0000034BTO1	apical meristem	BTO:0000034	1			BTO:0000247		
+BTO:0000035BTO1	colorectal adenocarcinoma cell	BTO:0000035	0	adenocarcinoma cell, colorectal		BTO:0000193		
+BTO:0000035BTO1	colorectal adenocarcinoma cell	BTO:0000035	0	adenocarcinoma cell, colorectal		BTO:0000586		
+BTO:0000035BTO1	colorectal adenocarcinoma cell	BTO:0000035	0	adenocarcinoma cell, colorectal		BTO:0000604		
+BTO:0000036BTO1	gastric adenocarcinoma cell	BTO:0000036	1	adenocarcinoma cell of the stomach, gastric carcinoma cell		BTO:0000498		
+BTO:0000036BTO1	gastric adenocarcinoma cell	BTO:0000036	1	adenocarcinoma cell of the stomach, gastric carcinoma cell		BTO:0000604		
+BTO:0000037BTO1	renal cell carcinoma cell	BTO:0000037	1	adenocarcinoma cell of kidney, CCRCC cell, clear cell carcinoma cell, clear cell renal cell carcinoma cell, Grawitz`s tumor cell, hypernephroid carcinoma cell, hypernephroma cell, kidney adenocarcinoma cell, renal adenocarcinoma cell		BTO:0000604		
+BTO:0000037BTO1	renal cell carcinoma cell	BTO:0000037	1	adenocarcinoma cell of kidney, CCRCC cell, clear cell carcinoma cell, clear cell renal cell carcinoma cell, Grawitz`s tumor cell, hypernephroid carcinoma cell, hypernephroma cell, kidney adenocarcinoma cell, renal adenocarcinoma cell		BTO:0000680		
+BTO:0000038BTO1	SW-480 cell	BTO:0000038	1	SW480 cell		BTO:0001913		
+BTO:0000039BTO1	root cap	BTO:0000039	1			BTO:0001191		
+BTO:0000040BTO1	adenohypophysis	BTO:0000040	1	anterior hypophysis, anterior lobe of pituitary, anterior pituitary, anterior pituitary gland		BTO:0000496		
