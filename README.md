@@ -36,12 +36,13 @@ By default the output file will not include the term definitions; include them w
 
 By default the output file will not include the term comments; include them with /Com
 
--------------------------------------------------------------------------------
-Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA) in 2016
+## Contacts
 
+Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA) in 2016 \
 E-mail: matthew.monroe@pnnl.gov or matt@alchemistmatt.com \
 Website: http://panomics.pnnl.gov/ or http://omics.pnl.gov or http://www.sysbio.org/resources/staff/
--------------------------------------------------------------------------------
+
+## License
 
 Licensed under the Apache License, Version 2.0; you may not use this file except 
 in compliance with the License.  You may obtain a copy of the License at 
