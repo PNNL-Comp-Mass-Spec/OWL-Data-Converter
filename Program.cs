@@ -84,17 +84,14 @@ namespace OWLDataConverter
             ShowErrorMessage(message);
         }
 
-
         private static void Converter_StatusEvent(string message)
         {
             Console.WriteLine(message);
         }
+
         private static void Converter_WarningEvent(string message)
         {
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            ConsoleMsgUtils.ShowWarning(message);
         }
 
         private static string GetAppVersion()
@@ -176,56 +173,34 @@ namespace OWLDataConverter
             }
             catch (Exception ex)
             {
-                ShowErrorMessage("Error parsing the command line parameters: " + Environment.NewLine + ex.Message);
+                ShowErrorMessage("Error parsing the command line parameters", ex);
             }
 
             return false;
         }
 
-        private static void ShowErrorMessage(string strMessage, Exception ex = null)
+        private static void ShowErrorMessage(string message, Exception ex = null)
         {
-            const string strSeparator = "------------------------------------------------------------------------------";
-
-            Console.WriteLine();
-            Console.WriteLine(strSeparator);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(strMessage);
-
-            if (ex != null)
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine();
-                Console.WriteLine(clsStackTraceFormatter.GetExceptionStackTraceMultiLine(ex));
-            }
-
-            Console.WriteLine(strSeparator);
-            Console.WriteLine();
-
-            Console.ResetColor();
-
-            WriteToErrorStream(strMessage);
+            ConsoleMsgUtils.ShowError(message, ex);
         }
 
-        private static void ShowErrorMessage(string strTitle, IEnumerable<string> items)
+        private static void ShowErrorMessage(string message, IReadOnlyCollection<string> additionalInfo)
         {
-            const string strSeparator = "------------------------------------------------------------------------------";
-
-            Console.WriteLine();
-            Console.WriteLine(strSeparator);
-            Console.WriteLine(strTitle);
-            var strMessage = strTitle + ":";
-
-            foreach (var item in items)
+            if (additionalInfo == null || additionalInfo.Count == 0)
             {
-                Console.WriteLine("   " + item);
-                strMessage += " " + item;
+                ConsoleMsgUtils.ShowError(message);
+                return;
             }
-            Console.WriteLine(strSeparator);
-            Console.WriteLine();
 
-            WriteToErrorStream(strMessage);
+            var formattedMessage = message + ":";
+
+            foreach (var item in additionalInfo)
+            {
+                formattedMessage += Environment.NewLine + "  " + item;
+            }
+
+            ConsoleMsgUtils.ShowError(formattedMessage, true, false);
         }
-
 
         private static void ShowProgramHelp()
         {
@@ -272,22 +247,6 @@ namespace OWLDataConverter
                 Console.WriteLine("Error displaying the program syntax: " + ex.Message);
             }
 
-        }
-
-        private static void WriteToErrorStream(string strErrorMessage)
-        {
-            try
-            {
-                using (var swErrorStream = new System.IO.StreamWriter(Console.OpenStandardError()))
-                {
-                    swErrorStream.WriteLine(strErrorMessage);
-                }
-            }
-            // ReSharper disable once EmptyGeneralCatchClause
-            catch
-            {
-                // Ignore errors here
-            }
         }
 
     }
