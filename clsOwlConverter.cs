@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace OWLDataConverter
 {
-    class clsOwlConverter : PRISM.clsEventNotifier
+    class clsOwlConverter : PRISM.EventNotifier
     {
         #region "Constants"
 
