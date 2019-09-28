@@ -51,8 +51,6 @@ namespace OWLDataConverter
 
         #region "Classwide variables"
 
-        private readonly string mPrimaryKeySuffix;
-
         #endregion
 
         #region "Properties"
@@ -65,7 +63,7 @@ namespace OWLDataConverter
         /// <summary>
         /// String appended to the ontology term identifier when creating the primary key for the Term_PK column
         /// </summary>
-        public string PrimaryKeySuffix => mPrimaryKeySuffix;
+        public string PrimaryKeySuffix { get; }
 
         #endregion
 
@@ -76,9 +74,9 @@ namespace OWLDataConverter
         public clsOwlConverter(string primaryKeySuffix = DEFAULT_PRIMARY_KEY_SUFFIX)
         {
             if (string.IsNullOrWhiteSpace(primaryKeySuffix))
-                mPrimaryKeySuffix = string.Empty;
+                PrimaryKeySuffix = string.Empty;
             else
-                mPrimaryKeySuffix = primaryKeySuffix;
+                PrimaryKeySuffix = primaryKeySuffix;
 
             OutputOptions = DefaultOutputOptions();
         }
@@ -323,7 +321,7 @@ namespace OWLDataConverter
 
         private List<string> OntologyTermNoParents(OwlEntry ontologyTerm)
         {
-            var suffix = string.IsNullOrWhiteSpace(mPrimaryKeySuffix) ? string.Empty : mPrimaryKeySuffix;
+            var suffix = string.IsNullOrWhiteSpace(PrimaryKeySuffix) ? string.Empty : PrimaryKeySuffix;
 
             var dataColumns = new List<string>
             {
