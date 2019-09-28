@@ -144,7 +144,13 @@ namespace OWLDataConverter
                                 switch (xmlReader.Name)
                                 {
                                     case "owl:Class":
-                                        var termName = ParseTerm(xmlReader, ontologyEntries, lastTerm);
+                                        // The Envo.owl file lists the term name as a rdf:about attribute of the owl:Class tag, for example:
+                                        // <owl:Class rdf:about="http://purl.obolibrary.org/obo/ENVO_00000006">
+                                        // Extract out the name, though we will override it if a oboInOwl:id element is found
+
+                                        var classIdentifier = TryGetAttribute(xmlReader, "rdf:about", string.Empty);
+
+                                        var termName = ParseTerm(xmlReader, ontologyEntries, lastTerm, classIdentifier);
                                         if (!string.IsNullOrWhiteSpace(termName))
                                             lastTerm = termName;
 
@@ -361,12 +367,13 @@ namespace OWLDataConverter
         /// <param name="xmlReader"></param>
         /// <param name="ontologyEntries"></param>
         /// <param name="mostRecentTerm"></param>
+        /// <param name="classIdentifier">Identifier from the owl:Class term</param>
         /// <returns>Term name</returns>
-        private string ParseTerm(XmlReader xmlReader, ICollection<OwlEntry> ontologyEntries, string mostRecentTerm)
+        private string ParseTerm(XmlReader xmlReader, ICollection<OwlEntry> ontologyEntries, string mostRecentTerm, string classIdentifier = "")
         {
             try
             {
-                var identifier = string.Empty;
+                var identifier = classIdentifier;
                 var name = string.Empty;
                 var definition = string.Empty;
                 var comment = string.Empty;
@@ -530,6 +537,20 @@ namespace OWLDataConverter
             {
                 throw new Exception("Exception in ParseTerm: " + ex.Message, ex);
             }
+        }
+
+        private string TryGetAttribute(XmlReader xmlReader, string attributeName, string defaultValue)
+        {
+            if (!xmlReader.HasAttributes)
+                return defaultValue;
+
+            var aboutUrl = xmlReader.GetAttribute(attributeName);
+
+            if (string.IsNullOrWhiteSpace(aboutUrl) || !aboutUrl.StartsWith("http"))
+                return defaultValue;
+
+            var classIdentifier = aboutUrl.Split('/').Last();
+            return string.IsNullOrWhiteSpace(classIdentifier) ? defaultValue : classIdentifier;
         }
 
         private bool WriteOwlInfoToFile(IReadOnlyCollection<OwlEntry> ontologyEntries, FileSystemInfo outputFile)
