@@ -15,7 +15,7 @@ namespace OWLDataConverter
     /// </remarks>
     class Program
     {
-        public const string PROGRAM_DATE = "May 9, 2019";
+        public const string PROGRAM_DATE = "September 28, 2019";
 
         private static string mInputFilePath;
         private static string mOutputFilePath;
@@ -135,20 +135,19 @@ namespace OWLDataConverter
                     mOutputFilePath = objParseCommandLine.RetrieveNonSwitchParameter(1);
                 }
 
-                string paramValue;
-                if (objParseCommandLine.RetrieveValueForParameter("I", out paramValue))
+                if (objParseCommandLine.RetrieveValueForParameter("I", out var inputFilePath))
                 {
-                    mInputFilePath = string.Copy(paramValue);
+                    mInputFilePath = string.Copy(inputFilePath);
                 }
 
-                if (objParseCommandLine.RetrieveValueForParameter("O", out paramValue))
+                if (objParseCommandLine.RetrieveValueForParameter("O", out var outputFilePath))
                 {
-                    mOutputFilePath = string.Copy(paramValue);
+                    mOutputFilePath = string.Copy(outputFilePath);
                 }
 
-                if (objParseCommandLine.RetrieveValueForParameter("PK", out paramValue))
+                if (objParseCommandLine.RetrieveValueForParameter("PK", out var primaryKeySuffix))
                 {
-                    mPrimaryKeySuffix = string.Copy(paramValue);
+                    mPrimaryKeySuffix = string.Copy(primaryKeySuffix);
                 }
 
                 if (objParseCommandLine.IsParameterPresent("NoP"))
