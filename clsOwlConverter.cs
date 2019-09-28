@@ -381,6 +381,8 @@ namespace OWLDataConverter
                 var parentTerms = new Dictionary<string, OwlEntry.eParentType>();
                 var synonyms = new List<string>();
 
+                var insideEquivalentClass = false;
+                var insideIntersectionOf = false;
                 var insideSubClassOf = false;
                 var relationshipType = string.Empty;
 
@@ -397,7 +399,16 @@ namespace OWLDataConverter
                             switch (xmlReader.Name)
                             {
                                 case "owl:Class":
-                                    if (string.IsNullOrEmpty(name))
+                                    if (insideIntersectionOf || insideEquivalentClass || insideSubClassOf)
+                                    {
+                                        break;
+                                    }
+
+                                    if (!string.IsNullOrWhiteSpace(classIdentifier))
+                                    {
+                                        OnWarningEvent("Nested owl:Class terms; this is unexpected. See term: " + classIdentifier);
+                                    }
+                                    else if (string.IsNullOrEmpty(name))
                                     {
                                         OnWarningEvent("Nested owl:Class terms; this is unexpected. Most recent term: " + mostRecentTerm);
                                     }
@@ -405,6 +416,14 @@ namespace OWLDataConverter
                                     {
                                         OnWarningEvent("Nested owl:Class terms; this is unexpected. See term: " + name);
                                     }
+                                    break;
+
+                                case "owl:intersectionOf":
+                                    insideIntersectionOf = true;
+                                    break;
+
+                                case "owl:equivalentClass":
+                                    insideEquivalentClass = true;
                                     break;
 
                                 case "rdfs:label":
@@ -495,8 +514,18 @@ namespace OWLDataConverter
                             break;
 
                         case XmlNodeType.EndElement:
-                            if (xmlReader.Name == "rdfs:subClassOf")
-                                insideSubClassOf = false;
+                            switch (xmlReader.Name)
+                            {
+                                case "rdfs:subClassOf":
+                                    insideSubClassOf = false;
+                                    break;
+                                case "owl:intersectionOf":
+                                    insideIntersectionOf = false;
+                                    break;
+                                case "owl:equivalentClass":
+                                    insideEquivalentClass = true;
+                                    break;
+                            }
 
                             if (xmlReader.Depth == startingDepth)
                                 termParsed = true;
@@ -527,7 +556,6 @@ namespace OWLDataConverter
                 {
                     ontologyEntry.AddSynonym(synonym);
                 }
-
 
                 ontologyEntries.Add(ontologyEntry);
 
