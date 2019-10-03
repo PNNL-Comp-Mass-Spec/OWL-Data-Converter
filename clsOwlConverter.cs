@@ -148,7 +148,7 @@ namespace OWLDataConverter
                                         // <owl:Class rdf:about="http://purl.obolibrary.org/obo/ENVO_00000006">
                                         // Extract out the name, though we will override it if a oboInOwl:id element is found
 
-                                        var classIdentifier = TryGetAttribute(xmlReader, "rdf:about", string.Empty);
+                                        var classIdentifier = TryGetClassIdentifier(xmlReader, "rdf:about", string.Empty);
 
                                         var termName = ParseTerm(xmlReader, ontologyEntries, lastTerm, classIdentifier);
                                         if (!string.IsNullOrWhiteSpace(termName))
@@ -567,7 +567,7 @@ namespace OWLDataConverter
             }
         }
 
-        private string TryGetAttribute(XmlReader xmlReader, string attributeName, string defaultValue)
+        private string TryGetClassIdentifier(XmlReader xmlReader, string attributeName, string defaultValue)
         {
             if (!xmlReader.HasAttributes)
                 return defaultValue;
