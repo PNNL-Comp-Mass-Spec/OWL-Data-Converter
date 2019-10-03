@@ -1,0 +1,90 @@
+Term_PK	Term_Name	Identifier	Is_Leaf	Synonyms	Parent_term_name	Parent_term_ID	GrandParent_term_name	GrandParent_term_ID
+ENVO:00000000ENVO1	geographic feature	ENVO:00000000	0			ENVO:01000813		
+ENVO:00000001ENVO1	bedding-plane cave	ENVO:00000001	1			ENVO:00000067		
+ENVO:00000002ENVO1	anthropogenic geographic feature	ENVO:00000002	0	manmade feature, man-made feature	geographic feature	ENVO:00000000		ENVO:01000813
+ENVO:00000002ENVO1	anthropogenic geographic feature	ENVO:00000002	0	manmade feature, man-made feature		ENVO:01000952		
+ENVO:00000003ENVO1	mine tailing	ENVO:00000003	1	dumping ground, mine dump, tailing		ENVO:0010001		
+ENVO:00000004ENVO1	administrative region	ENVO:00000004	0	administrative division, administrative entity, boundary region, civil area, district, free trade zone, governed place, leased area (government), leased zone (government), neutral zone (political), prefecture, protectorate, sheikdom, sultanate, trade zone		BFO:0000029		
+ENVO:00000005ENVO1	first-order administrative region	ENVO:00000005	0	countries, 1st order division, first level subdivision, first-order administrative division	administrative region	ENVO:00000004		BFO:0000029
+ENVO:00000005ENVO1	first-order administrative region	ENVO:00000005	0	countries, 1st order division, first level subdivision, first-order administrative division	national geopolitical entity	ENVO:00000009		ENVO:00000123
+ENVO:00000006ENVO1	second-order administrative region	ENVO:00000006	0	countries, 2nd order division, second level subdivision, second-order administrative division	administrative region	ENVO:00000004		BFO:0000029
+ENVO:00000006ENVO1	second-order administrative region	ENVO:00000006	0	countries, 2nd order division, second level subdivision, second-order administrative division	first-order administrative region	ENVO:00000005	administrative region	ENVO:00000004
+ENVO:00000006ENVO1	second-order administrative region	ENVO:00000006	0	countries, 2nd order division, second level subdivision, second-order administrative division	first-order administrative region	ENVO:00000005	national geopolitical entity	ENVO:00000009
+ENVO:00000007ENVO1	third-order administrative region	ENVO:00000007	0	barrio, countries, 3rd order division, third level subdivision, third-order administrative division	administrative region	ENVO:00000004		BFO:0000029
+ENVO:00000007ENVO1	third-order administrative region	ENVO:00000007	0	barrio, countries, 3rd order division, third level subdivision, third-order administrative division	second-order administrative region	ENVO:00000006	administrative region	ENVO:00000004
+ENVO:00000007ENVO1	third-order administrative region	ENVO:00000007	0	barrio, countries, 3rd order division, third level subdivision, third-order administrative division	second-order administrative region	ENVO:00000006	first-order administrative region	ENVO:00000005
+ENVO:00000008ENVO1	fourth-order administrative region	ENVO:00000008	1	countries, 4th order division, fourth level subdivision, fourth-order administrative division	administrative region	ENVO:00000004		BFO:0000029
+ENVO:00000008ENVO1	fourth-order administrative region	ENVO:00000008	1	countries, 4th order division, fourth level subdivision, fourth-order administrative division	third-order administrative region	ENVO:00000007	administrative region	ENVO:00000004
+ENVO:00000008ENVO1	fourth-order administrative region	ENVO:00000008	1	countries, 4th order division, fourth level subdivision, fourth-order administrative division	third-order administrative region	ENVO:00000007	second-order administrative region	ENVO:00000006
+ENVO:00000009ENVO1	national geopolitical entity	ENVO:00000009	0	country, political entity, state		ENVO:00000123		
+ENVO:00000010ENVO1	transport feature	ENVO:00000010	1			ENVO:00000070		
+ENVO:00000010ENVO1	transport feature	ENVO:00000010	1			ENVO:01001444		
+ENVO:00000011ENVO1	garden	ENVO:00000011	1	cropland, park, PARK	anthropogenic geographic feature	ENVO:00000002	geographic feature	ENVO:00000000
+ENVO:00000011ENVO1	garden	ENVO:00000011	1	cropland, park, PARK	anthropogenic geographic feature	ENVO:00000002		ENVO:01000952
+ENVO:00000012ENVO1	hydrographic feature	ENVO:00000012	0	fluvial feature	geographic feature	ENVO:00000000		ENVO:01000813
+ENVO:00000013ENVO1	cave system	ENVO:00000013	1			ENVO:00000191		
+ENVO:00000013ENVO1	cave system	ENVO:00000013	1			ENVO:00000067		
+ENVO:00000014ENVO1	canal	ENVO:00000014	0		watercourse	ENVO:00000029		ENVO:01000618
+ENVO:00000014ENVO1	canal	ENVO:00000014	0		watercourse	ENVO:00000029		ENVO:00000395
+ENVO:00000014ENVO1	canal	ENVO:00000014	0			PATO:0001154		
+ENVO:00000015ENVO1	ocean	ENVO:00000015	1	ocean region		ENVO:00001999		
+ENVO:00000015ENVO1	ocean	ENVO:00000015	1	ocean region		ENVO:01001319		
+ENVO:00000015ENVO1	ocean	ENVO:00000015	1	ocean region		ENVO:00002149		
+ENVO:00000016ENVO1	sea	ENVO:00000016	1			ENVO:00001999		
+ENVO:00000016ENVO1	sea	ENVO:00000016	1			ENVO:01001319		
+ENVO:00000016ENVO1	sea	ENVO:00000016	1			ENVO:00002149		
+ENVO:00000017ENVO1	saline hydrographic feature	ENVO:00000017	1		hydrographic feature	ENVO:00000012	geographic feature	ENVO:00000000
+ENVO:00000018ENVO1	obsolete dry river	ENVO:00000018	1			owl#Thing		
+ENVO:00000019ENVO1	saline lake	ENVO:00000019	1	salina, soda lake	lake	ENVO:00000020		ENVO:01000617
+ENVO:00000019ENVO1	saline lake	ENVO:00000019	1	salina, soda lake	lake	ENVO:00000020		ENVO:01000635
+ENVO:00000019ENVO1	saline lake	ENVO:00000019	1	salina, soda lake		ENVO:01001319		
+ENVO:00000020ENVO1	lake	ENVO:00000020	0	broad, llyn, loch, lochan, lough, mere, mortlake, pasteuer lake		ENVO:01000617		
+ENVO:00000020ENVO1	lake	ENVO:00000020	0	broad, llyn, loch, lochan, lough, mere, mortlake, pasteuer lake		ENVO:01000635		
+ENVO:00000021ENVO1	freshwater lake	ENVO:00000021	1		lake	ENVO:00000020		ENVO:01000617
+ENVO:00000021ENVO1	freshwater lake	ENVO:00000021	1		lake	ENVO:00000020		ENVO:01000635
+ENVO:00000021ENVO1	freshwater lake	ENVO:00000021	1			ENVO:01001320		
+ENVO:00000022ENVO1	river	ENVO:00000022	1		stream	ENVO:00000023	watercourse	ENVO:00000029
+ENVO:00000022ENVO1	river	ENVO:00000022	1		stream	ENVO:00000023		PATO:0001199
+ENVO:00000022ENVO1	river	ENVO:00000022	1		stream	ENVO:00000023		ENVO:01000650
+ENVO:00000022ENVO1	river	ENVO:00000022	1			ENVO:01000652		
+ENVO:00000022ENVO1	river	ENVO:00000022	1			ENVO:00000143		
+ENVO:00000023ENVO1	stream	ENVO:00000023	0	beck, brook, burn (hydrographic), creek, Creek, rivulet	watercourse	ENVO:00000029		ENVO:01000618
+ENVO:00000023ENVO1	stream	ENVO:00000023	0	beck, brook, burn (hydrographic), creek, Creek, rivulet	watercourse	ENVO:00000029		ENVO:00000395
+ENVO:00000023ENVO1	stream	ENVO:00000023	0	beck, brook, burn (hydrographic), creek, Creek, rivulet		PATO:0001199		
+ENVO:00000023ENVO1	stream	ENVO:00000023	0	beck, brook, burn (hydrographic), creek, Creek, rivulet		ENVO:01000650		
+ENVO:00000024ENVO1	obsolete intermittent stream	ENVO:00000024	1			owl#Thing		
+ENVO:00000025ENVO1	reservoir	ENVO:00000025	1			ENVO:00000377		
+ENVO:00000026ENVO1	well	ENVO:00000026	1		anthropogenic geographic feature	ENVO:00000002	geographic feature	ENVO:00000000
+ENVO:00000026ENVO1	well	ENVO:00000026	1		anthropogenic geographic feature	ENVO:00000002		ENVO:01000952
+ENVO:00000027ENVO1	spring	ENVO:00000027	1	seep	geographic feature	ENVO:00000000		ENVO:01000813
+ENVO:00000028ENVO1	sand pit quarry	ENVO:00000028	1	sand pit		ENVO:00000284		
+ENVO:00000028ENVO1	sand pit quarry	ENVO:00000028	1	sand pit		ENVO:01000017		
+ENVO:00000029ENVO1	watercourse	ENVO:00000029	0	awawa, barranca, beck, branch, brook, course, draw, moat, narrows, narrows (hydrographic)		ENVO:01000618		
+ENVO:00000029ENVO1	watercourse	ENVO:00000029	0	awawa, barranca, beck, branch, brook, course, draw, moat, narrows, narrows (hydrographic)		ENVO:00000395		
+ENVO:00000030ENVO1	dead cave	ENVO:00000030	1			ENVO:00000067		
+ENVO:00000030ENVO1	dead cave	ENVO:00000030	1			PATO:0001824		
+ENVO:00000031ENVO1	wadi	ENVO:00000031	1	arroyo, coulee, gully, nullah, wash		ENVO:00000100		
+ENVO:00000031ENVO1	wadi	ENVO:00000031	1	arroyo, coulee, gully, nullah, wash		ENVO:01000980		
+ENVO:00000032ENVO1	bay	ENVO:00000032	1	bahia, embayment, firth, inlet, sea loch, sea lough		ENVO:00000137		
+ENVO:00000033ENVO1	pond	ENVO:00000033	1	millpond, pond, ponds, pool, POOL, pool (water body)		ENVO:01000617		
+ENVO:00000034ENVO1	rapids	ENVO:00000034	1	cataract, torrent		ENVO:01001308		
+ENVO:00000034ENVO1	rapids	ENVO:00000034	1	cataract, torrent	stream	ENVO:00000023	watercourse	ENVO:00000029
+ENVO:00000034ENVO1	rapids	ENVO:00000034	1	cataract, torrent	stream	ENVO:00000023		PATO:0001199
+ENVO:00000034ENVO1	rapids	ENVO:00000034	1	cataract, torrent	stream	ENVO:00000023		ENVO:01000650
+ENVO:00000035ENVO1	marsh	ENVO:00000035	1	marsh, Marsh, quagmire		ENVO:01001209		
+ENVO:00000036ENVO1	irrigation canal	ENVO:00000036	1		canal	ENVO:00000014	watercourse	ENVO:00000029
+ENVO:00000036ENVO1	irrigation canal	ENVO:00000036	1		canal	ENVO:00000014		PATO:0001154
+ENVO:00000037ENVO1	ditch	ENVO:00000037	1			ENVO:00000121		
+ENVO:00000038ENVO1	lagoon	ENVO:00000038	1	barrier lagoon		ENVO:01000325		
+ENVO:00000038ENVO1	lagoon	ENVO:00000038	1	barrier lagoon		ENVO:00000230		
+ENVO:00000038ENVO1	lagoon	ENVO:00000038	1	barrier lagoon		ENVO:00000304		
+ENVO:00000038ENVO1	lagoon	ENVO:00000038	1	barrier lagoon		ENVO:00002010		
+ENVO:00000039ENVO1	fjord	ENVO:00000039	1			ENVO:00000137		
+ENVO:00000039ENVO1	fjord	ENVO:00000039	1			PATO:0001154		
+ENVO:00000039ENVO1	fjord	ENVO:00000039	1			ENVO:00002000		
+ENVO:00000039ENVO1	fjord	ENVO:00000039	1			ENVO:03000006		
+ENVO:00000040ENVO1	waterfall	ENVO:00000040	1	cascade, cataract, fall, falls		ENVO:01000618		
+ENVO:00000040ENVO1	waterfall	ENVO:00000040	1	cascade, cataract, fall, falls		ENVO:01001308		
+ENVO:00000040ENVO1	waterfall	ENVO:00000040	1	cascade, cataract, fall, falls	stream	ENVO:00000023	watercourse	ENVO:00000029
+ENVO:00000040ENVO1	waterfall	ENVO:00000040	1	cascade, cataract, fall, falls	stream	ENVO:00000023		PATO:0001199
+ENVO:00000040ENVO1	waterfall	ENVO:00000040	1	cascade, cataract, fall, falls	stream	ENVO:00000023		ENVO:01000650
