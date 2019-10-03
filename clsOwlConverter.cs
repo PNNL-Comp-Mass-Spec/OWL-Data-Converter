@@ -578,7 +578,16 @@ namespace OWLDataConverter
                 return defaultValue;
 
             var classIdentifier = aboutUrl.Split('/').Last();
-            return string.IsNullOrWhiteSpace(classIdentifier) ? defaultValue : classIdentifier;
+            if (string.IsNullOrWhiteSpace(classIdentifier))
+                return defaultValue;
+
+            // classIdentifier may be of the form ENVO_01001569
+            // Replace the underscore with a colon
+            var underscoreIndex = classIdentifier.IndexOf('_');
+            if (underscoreIndex > 0)
+                return classIdentifier.Substring(0, underscoreIndex) + ':' + classIdentifier.Substring(underscoreIndex + 1);
+
+            return classIdentifier;
         }
 
         private bool WriteOwlInfoToFile(IReadOnlyCollection<OwlEntry> ontologyEntries, FileSystemInfo outputFile)

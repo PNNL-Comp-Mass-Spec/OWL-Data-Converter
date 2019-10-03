@@ -15,7 +15,7 @@ namespace OWLDataConverter
     /// </remarks>
     class Program
     {
-        public const string PROGRAM_DATE = "September 28, 2019";
+        public const string PROGRAM_DATE = "October 2, 2019";
 
         private static string mInputFilePath;
         private static string mOutputFilePath;
