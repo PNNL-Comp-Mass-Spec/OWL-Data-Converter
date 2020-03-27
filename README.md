@@ -6,9 +6,15 @@ in the OWL RDF/XML format and converts the data to a tab-delimited text file.
 OWL files are described at https://www.w3.org/TR/owl-parsing/
 and can be edited / managed using Protégé, available at https://protege.stanford.edu/products.php#desktop-protege
 
+
+## Downloads
+
+Download a .zip file with the executable from:
+https://github.com/PNNL-Comp-Mass-Spec/OWL-Data-Converter/releases
+
 ### Continuous Integration
 
-The latest version of the application is available on the [AppVeyor CI server](https://ci.appveyor.com/project/PNNLCompMassSpec/owl-data-converter/build/artifacts)
+The latest version of the application is available for six months on the [AppVeyor CI server](https://ci.appveyor.com/project/PNNLCompMassSpec/owl-data-converter/build/artifacts)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/abnkox453lgtpndc?svg=true)](https://ci.appveyor.com/project/PNNLCompMassSpec/owl-data-converter)
 
@@ -36,11 +42,18 @@ By default the output file will not include the term definitions; include them w
 
 By default the output file will not include the term comments; include them with /Com
 
+### Syntax Example
+
+```
+OWLDataConverter.exe bto.owl /PK:BTO1
+```
+
 ## Contacts
 
 Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA) in 2016 \
-E-mail: matthew.monroe@pnnl.gov or matt@alchemistmatt.com \
-Website: http://panomics.pnnl.gov/ or http://omics.pnl.gov or http://www.sysbio.org/resources/staff/
+E-mail: matthew.monroe@pnnl.gov or proteomics@pnnl.gov \
+Website: https://omics.pnl.gov/ or https://panomics.pnnl.gov/ \
+Source code: https://github.com/PNNL-Comp-Mass-Spec/OWL-Data-Converter
 
 ## License
 
