@@ -8,13 +8,9 @@ namespace OWLDataConverter
 {
     class clsOwlConverter : PRISM.EventNotifier
     {
-        #region "Constants"
+        // Ignore Spelling: cls, Postgres, udt
 
         public const string DEFAULT_PRIMARY_KEY_SUFFIX = "BTO1";
-
-        #endregion
-
-        #region "Structs"
 
         public struct udtOutputOptions
         {
@@ -47,14 +43,6 @@ namespace OWLDataConverter
 
         }
 
-        #endregion
-
-        #region "Classwide variables"
-
-        #endregion
-
-        #region "Properties"
-
         /// <summary>
         /// Output file options
         /// </summary>
@@ -64,8 +52,6 @@ namespace OWLDataConverter
         /// String appended to the ontology term identifier when creating the primary key for the Term_PK column
         /// </summary>
         public string PrimaryKeySuffix { get; }
-
-        #endregion
 
         /// <summary>
         /// Constructor
