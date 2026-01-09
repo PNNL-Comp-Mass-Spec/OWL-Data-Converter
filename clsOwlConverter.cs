@@ -597,124 +597,119 @@ namespace OWLDataConverter
             {
                 OnStatusEvent("Creating " + outputFile.FullName);
 
-                using (var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite)))
+                using var writer = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite));
+
+                var columnHeaders = new List<string>
                 {
-                    var columnHeaders = new List<string>
+                    "Term_PK",
+                    "Term_Name",
+                    "Identifier",
+                    "Is_Leaf",
+                    "Synonyms"
+                };
+
+                if (OutputOptions.IncludeDefinition)
+                    columnHeaders.Add("Definition");
+
+                if (OutputOptions.IncludeComment)
+                    columnHeaders.Add("Comment");
+
+                if (OutputOptions.IncludeGrandparentTerms && !OutputOptions.IncludeParentTerms)
+                {
+                    // Force-enable inclusion of parent terms because grandparent terms will be included
+                    var updatedOptions = OutputOptions;
+                    updatedOptions.IncludeParentTerms = true;
+                    OutputOptions = updatedOptions;
+                }
+
+                if (OutputOptions.IncludeParentTerms)
+                {
+                    columnHeaders.Add("Parent_term_name");
+                    columnHeaders.Add("Parent_term_ID");
+                }
+
+                if (OutputOptions.IncludeGrandparentTerms)
+                {
+                    columnHeaders.Add("GrandParent_term_name");
+                    columnHeaders.Add("GrandParent_term_ID");
+                }
+
+                writer.WriteLine(string.Join("\t", columnHeaders));
+
+                var idToNameMap = new Dictionary<string, string>();
+
+                // Make a map from term ID to term Name
+                var warningCount = 0;
+                foreach (var ontologyTerm in ontologyEntries)
+                {
+                    if (idToNameMap.ContainsKey(ontologyTerm.Identifier))
                     {
-                        "Term_PK",
-                        "Term_Name",
-                        "Identifier",
-                        "Is_Leaf",
-                        "Synonyms"
-                    };
-
-                    if (OutputOptions.IncludeDefinition)
-                        columnHeaders.Add("Definition");
-
-                    if (OutputOptions.IncludeComment)
-                        columnHeaders.Add("Comment");
-
-                    if (OutputOptions.IncludeGrandparentTerms && !OutputOptions.IncludeParentTerms)
-                    {
-                        // Force-enable inclusion of parent terms because grandparent terms will be included
-                        var updatedOptions = OutputOptions;
-                        updatedOptions.IncludeParentTerms = true;
-                        OutputOptions = updatedOptions;
-                    }
-
-                    if (OutputOptions.IncludeParentTerms)
-                    {
-                        columnHeaders.Add("Parent_term_name");
-                        columnHeaders.Add("Parent_term_ID");
-                    }
-
-                    if (OutputOptions.IncludeGrandparentTerms)
-                    {
-                        columnHeaders.Add("GrandParent_term_name");
-                        columnHeaders.Add("GrandParent_term_ID");
-                    }
-
-                    writer.WriteLine(string.Join("\t", columnHeaders));
-
-                    var idToNameMap = new Dictionary<string, string>();
-
-                    // Make a map from term ID to term Name
-                    var warningCount = 0;
-                    foreach (var ontologyTerm in ontologyEntries)
-                    {
-                        if (idToNameMap.ContainsKey(ontologyTerm.Identifier))
+                        warningCount++;
+                        if (warningCount < 5)
                         {
-                            warningCount++;
-                            if (warningCount < 5)
-                            {
-                                OnWarningEvent(
-                                    $"Identifier {ontologyTerm.Identifier} is defined multiple times in th ontology entries; " +
-                                    "parent name lookup will use the first occurrence");
-                            }
-                            continue;
+                            OnWarningEvent(
+                                $"Identifier {ontologyTerm.Identifier} is defined multiple times in th ontology entries; " +
+                                "parent name lookup will use the first occurrence");
                         }
-                        idToNameMap.Add(ontologyTerm.Identifier, ontologyTerm.Name);
+                        continue;
+                    }
+                    idToNameMap.Add(ontologyTerm.Identifier, ontologyTerm.Name);
+                }
+
+                foreach (var ontologyTerm in ontologyEntries)
+                {
+                    if (ontologyTerm.ParentTerms.Count == 0 || !OutputOptions.IncludeParentTerms)
+                    {
+                        var lineOut = OntologyTermNoParents(ontologyTerm);
+
+                        if (OutputOptions.IncludeParentTerms)
+                        {
+                            lineOut.Add(string.Empty); // Parent term name
+                            lineOut.Add(string.Empty); // Parent term ID
+                        }
+
+                        writer.WriteLine(string.Join("\t", lineOut));
+                        continue;
                     }
 
-                    foreach (var ontologyTerm in ontologyEntries)
+                    foreach (var parentTerm in ontologyTerm.ParentTerms)
                     {
-                        if (ontologyTerm.ParentTerms.Count == 0 || !OutputOptions.IncludeParentTerms)
-                        {
-                            var lineOut = OntologyTermNoParents(ontologyTerm);
+                        var ancestor = GetAncestor(ontologyEntries, parentTerm.Key);
 
-                            if (OutputOptions.IncludeParentTerms)
+                        if (ancestor == null || ancestor.ParentTerms.Count == 0 || !OutputOptions.IncludeGrandparentTerms)
+                        {
+                            // No grandparents (or grandparents are disabled)
+                            var lineOut = OntologyTermWithParents(ontologyTerm, parentTerm, idToNameMap);
+
+                            if (OutputOptions.IncludeGrandparentTerms)
                             {
-                                lineOut.Add(string.Empty); // Parent term name
-                                lineOut.Add(string.Empty); // Parent term ID
+
+                                lineOut.Add(string.Empty); // Grandparent term name
+                                lineOut.Add(string.Empty); // Grandparent term ID
                             }
 
                             writer.WriteLine(string.Join("\t", lineOut));
                             continue;
                         }
 
-                        foreach (var parentTerm in ontologyTerm.ParentTerms)
+                        foreach (var grandParent in ancestor.ParentTerms)
                         {
-                            var ancestor = GetAncestor(ontologyEntries, parentTerm.Key);
+                            var lineOut = OntologyTermWithParents(ontologyTerm, parentTerm, idToNameMap);
+                            lineOut.Add(LookupNameById(idToNameMap, grandParent.Key)); // Get Grandparent Name using ID
+                            lineOut.Add(grandParent.Key);                              // Grandparent ID
 
-                            if (ancestor == null || ancestor.ParentTerms.Count == 0 || !OutputOptions.IncludeGrandparentTerms)
-                            {
-                                // No grandparents (or grandparents are disabled)
-                                var lineOut = OntologyTermWithParents(ontologyTerm, parentTerm, idToNameMap);
-
-                                if (OutputOptions.IncludeGrandparentTerms)
-                                {
-
-                                    lineOut.Add(string.Empty); // Grandparent term name
-                                    lineOut.Add(string.Empty); // Grandparent term ID
-                                }
-
-                                writer.WriteLine(string.Join("\t", lineOut));
-                                continue;
-                            }
-
-                            foreach (var grandParent in ancestor.ParentTerms)
-                            {
-                                var lineOut = OntologyTermWithParents(ontologyTerm, parentTerm, idToNameMap);
-                                lineOut.Add(LookupNameById(idToNameMap, grandParent.Key));      // Get Grandparent Name using ID
-                                lineOut.Add(grandParent.Key);                                   // Grandparent ID
-
-                                writer.WriteLine(string.Join("\t", lineOut));
-                            }
-                        } // ForEach
+                            writer.WriteLine(string.Join("\t", lineOut));
+                        }
                     } // ForEach
-                } // Using
+                }     // ForEach
 
                 return true;
-
             }
             catch (Exception ex)
             {
                 OnErrorEvent("Error writing to file " + outputFile.FullName + ": " + ex.Message);
                 return false;
             }
-
-
         }
-
     }
 }
