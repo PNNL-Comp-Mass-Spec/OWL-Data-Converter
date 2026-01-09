@@ -41,12 +41,25 @@ namespace OWLDataConverter
             /// <remarks>If this is true, IncludeParentTerms is assumed to be true</remarks>
             public bool IncludeGrandparentTerms;
 
+            // ReSharper disable once GrammarMistakeInComment
+
+            /// <summary>
+            /// When true, use \N for null values (empty columns in the output file) and escape backslashes.
+            /// This allows the data file to be imported using the COPY command:
+            /// COPY ont.T_Tmp_BTO FROM '/tmp/bto.txt' WITH (FORMAT TEXT, HEADER, DELIMITER E'\t');
+            /// </summary>
+            public bool FormatForPostgres;
         }
+
+        /// <summary>
+        /// Null value flag (either an empty string or "\N")
+        /// </summary>
+        private readonly string NullValueFlag;
 
         /// <summary>
         /// Output file options
         /// </summary>
-        public udtOutputOptions OutputOptions { get; set; }
+        private udtOutputOptions OutputOptions;
 
         /// <summary>
         /// String appended to the ontology term identifier when creating the primary key for the Term_PK column
@@ -56,21 +69,23 @@ namespace OWLDataConverter
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="options">Processing options</param>
         /// <param name="primaryKeySuffix">String appended to the ontology term identifier when creating the primary key for the Term_PK column</param>
-        public clsOwlConverter(string primaryKeySuffix = DEFAULT_PRIMARY_KEY_SUFFIX)
+        public clsOwlConverter(udtOutputOptions options, string primaryKeySuffix = DEFAULT_PRIMARY_KEY_SUFFIX)
         {
-            if (string.IsNullOrWhiteSpace(primaryKeySuffix))
-                PrimaryKeySuffix = string.Empty;
-            else
-                PrimaryKeySuffix = primaryKeySuffix;
+            OutputOptions = options;
 
-            OutputOptions = DefaultOutputOptions();
+            NullValueFlag = GetNullValueFlag();
+
+            PrimaryKeySuffix = string.IsNullOrWhiteSpace(primaryKeySuffix) ? string.Empty : primaryKeySuffix;
         }
+
+        // ReSharper disable once GrammarMistakeInComment
 
         /// <summary>
         /// Convert an OWL file to a tab-delimited text file
         /// </summary>
-        /// <param name="owlFilePath"></param>
+        /// <param name="owlFilePath">Path to file bto.owl</param>
         /// <returns>True if success, otherwise false</returns>
         public bool ConvertOwlFile(string owlFilePath)
         {
@@ -81,11 +96,13 @@ namespace OWLDataConverter
             return ConvertOwlFile(owlFilePath, outputFilePath);
         }
 
+        // ReSharper disable once GrammarMistakeInComment
+
         /// <summary>
         /// Convert an OWL file to a tab-delimited text file
         /// </summary>
-        /// <param name="owlFilePath"></param>
-        /// <param name="outputFilePath"></param>
+        /// <param name="owlFilePath">Path to file bto.owl</param>
+        /// <param name="outputFilePath">Output file path</param>
         /// <returns>True if success, otherwise false</returns>
         public bool ConvertOwlFile(string owlFilePath, string outputFilePath)
         {
@@ -107,11 +124,9 @@ namespace OWLDataConverter
 
                 OnStatusEvent("Parsing " + owlFile.FullName);
 
-                FileInfo outputFile;
-                if (string.IsNullOrWhiteSpace(outputFilePath))
-                    outputFile = new FileInfo(ConstructOutputFilePath(owlFile));
-                else
-                    outputFile = new FileInfo(outputFilePath);
+                var outputFile = string.IsNullOrWhiteSpace(outputFilePath)
+                    ? new FileInfo(ConstructOutputFilePath(owlFile))
+                    : new FileInfo(outputFilePath);
 
                 // Read the data from the Owl file
                 // Track them using this list
@@ -162,8 +177,8 @@ namespace OWLDataConverter
                 {
                     foreach (var parentTerm in ontologyTerm.ParentTerms)
                     {
-                        if (!parentNodes.Contains(parentTerm.Key))
-                            parentNodes.Add(parentTerm.Key);
+                        // Add the parent node if missing
+                        parentNodes.Add(parentTerm.Key);
                     }
                 }
 
@@ -194,17 +209,15 @@ namespace OWLDataConverter
 
         public static udtOutputOptions DefaultOutputOptions()
         {
-            var outputOptions = new udtOutputOptions()
+            return new udtOutputOptions
             {
                 IncludeDefinition = false,
                 StripQuotesFromDefinition = false,
                 IncludeComment = false,
                 IncludeParentTerms = true,
-                IncludeGrandparentTerms = true
+                IncludeGrandparentTerms = true,
+                FormatForPostgres = false
             };
-
-            return outputOptions;
-
         }
 
         private string ConstructOutputFilePath(FileInfo owlFile)
@@ -282,6 +295,25 @@ namespace OWLDataConverter
             return 0;
         }
 
+        private void FormatDataLine(IList<string> lineOut)
+        {
+            if (!OutputOptions.FormatForPostgres)
+            {
+                return;
+            }
+
+            for (var i = 0; i < lineOut.Count; i++)
+            {
+                lineOut[i] = GetValueOrNull(lineOut[i]);
+
+                if (lineOut[i].Equals(@"\N"))
+                    continue;
+
+                // Escape backslashes with \\
+                lineOut[i] = lineOut[i].Replace(@"\", @"\\");
+            }
+        }
+
         private static OwlEntry GetAncestor(IEnumerable<OwlEntry> ontologyEntries, string termIdentifier)
         {
             var query = (from item in ontologyEntries where item.Identifier == termIdentifier select item);
@@ -299,6 +331,16 @@ namespace OWLDataConverter
             var urlParts = parentUrl.Split('/');
             itemName = urlParts.Last();
             return true;
+        }
+
+        private string GetNullValueFlag()
+        {
+            return OutputOptions.FormatForPostgres ? @"\N" : string.Empty;
+        }
+
+        private string GetValueOrNull(string text)
+        {
+            return string.IsNullOrWhiteSpace(text) ? NullValueFlag : text;
         }
 
         private string LookupNameById(IReadOnlyDictionary<string, string> idToNameMap, string idToFind)
@@ -457,7 +499,6 @@ namespace OWLDataConverter
                                             else
                                                 relationshipType = relationshipTypeText;
                                         }
-
                                     }
                                     break;
 
@@ -576,9 +617,8 @@ namespace OWLDataConverter
             return classIdentifier;
         }
 
-        private bool WriteOwlInfoToFile(IReadOnlyCollection<OwlEntry> ontologyEntries, FileSystemInfo outputFile)
+        private bool WriteOwlInfoToFile(IList<OwlEntry> ontologyEntries, FileSystemInfo outputFile)
         {
-
             try
             {
                 OnStatusEvent("Creating " + outputFile.FullName);
@@ -600,12 +640,11 @@ namespace OWLDataConverter
                 if (OutputOptions.IncludeComment)
                     columnHeaders.Add("Comment");
 
+                // ReSharper disable once MergeIntoPattern
                 if (OutputOptions.IncludeGrandparentTerms && !OutputOptions.IncludeParentTerms)
                 {
                     // Force-enable inclusion of parent terms because grandparent terms will be included
-                    var updatedOptions = OutputOptions;
-                    updatedOptions.IncludeParentTerms = true;
-                    OutputOptions = updatedOptions;
+                    OutputOptions.IncludeParentTerms = true;
                 }
 
                 if (OutputOptions.IncludeParentTerms)
@@ -626,6 +665,7 @@ namespace OWLDataConverter
 
                 // Make a map from term ID to term Name
                 var warningCount = 0;
+
                 foreach (var ontologyTerm in ontologyEntries)
                 {
                     if (idToNameMap.ContainsKey(ontologyTerm.Identifier))
@@ -652,8 +692,16 @@ namespace OWLDataConverter
                         {
                             lineOut.Add(string.Empty); // Parent term name
                             lineOut.Add(string.Empty); // Parent term ID
+
+                            if (OutputOptions.IncludeGrandparentTerms)
+                            {
+                                lineOut.Add(string.Empty); // Grandparent term name
+                                lineOut.Add(string.Empty); // Grandparent term ID
+                            }
+
                         }
 
+                        FormatDataLine(lineOut);
                         writer.WriteLine(string.Join("\t", lineOut));
                         continue;
                     }
@@ -669,11 +717,11 @@ namespace OWLDataConverter
 
                             if (OutputOptions.IncludeGrandparentTerms)
                             {
-
                                 lineOut.Add(string.Empty); // Grandparent term name
                                 lineOut.Add(string.Empty); // Grandparent term ID
                             }
 
+                            FormatDataLine(lineOut);
                             writer.WriteLine(string.Join("\t", lineOut));
                             continue;
                         }
@@ -684,10 +732,11 @@ namespace OWLDataConverter
                             lineOut.Add(LookupNameById(idToNameMap, grandParent.Key)); // Get Grandparent Name using ID
                             lineOut.Add(grandParent.Key);                              // Grandparent ID
 
+                            FormatDataLine(lineOut);
                             writer.WriteLine(string.Join("\t", lineOut));
                         }
-                    } // ForEach
-                }     // ForEach
+                    }
+                }
 
                 return true;
             }

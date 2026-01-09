@@ -9,7 +9,6 @@ namespace OWLDataConverter
     /// </summary>
     /// <remarks>
     /// Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)
-    ///
     /// E-mail: matthew.monroe@pnnl.gov or proteomics@pnnl.gov
     /// Website: https://github.com/PNNL-Comp-Mass-Spec/ or https://www.pnnl.gov/integrative-omics
     /// </remarks>
@@ -51,10 +50,7 @@ namespace OWLDataConverter
                     return -1;
                 }
 
-                var converter = new clsOwlConverter(mPrimaryKeySuffix)
-                {
-                    OutputOptions = mOutputOptions
-                };
+                var converter = new clsOwlConverter(mOutputOptions, mPrimaryKeySuffix);
 
                 converter.ErrorEvent += Converter_ErrorEvent;
                 converter.StatusEvent += Converter_StatusEvent;
