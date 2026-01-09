@@ -11,11 +11,11 @@ namespace OWLDataConverter
     /// Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)
     ///
     /// E-mail: matthew.monroe@pnnl.gov or proteomics@pnnl.gov
-    /// Website: http://panomics.pnnl.gov/ or https://github.com/PNNL-Comp-Mass-Spec/ or https://panomics.pnnl.gov/ or https://www.pnnl.gov/integrative-omics
+    /// Website: https://github.com/PNNL-Comp-Mass-Spec/ or https://www.pnnl.gov/integrative-omics
     /// </remarks>
-    class Program
+    static class Program
     {
-        public const string PROGRAM_DATE = "March 27, 2020";
+        public const string PROGRAM_DATE = "January 8, 2026";
 
         private static string mInputFilePath;
         private static string mOutputFilePath;
@@ -35,7 +35,6 @@ namespace OWLDataConverter
 
             try
             {
-
                 var success = false;
 
                 if (objParseCommandLine.ParseCommandLine())
@@ -106,7 +105,8 @@ namespace OWLDataConverter
                 "I", "O",
                 "PK", "NoP", "NoG",
                 "Def", "Definition",
-                "Com", "Comm", "Comment"};
+                "Com", "Comm", "Comment",
+                "Postgres"};
 
             try
             {
@@ -161,12 +161,19 @@ namespace OWLDataConverter
 
                 if (objParseCommandLine.IsParameterPresent("Def") ||
                     objParseCommandLine.IsParameterPresent("Definition"))
+                {
                     mOutputOptions.IncludeDefinition = true;
+                }
 
                 if (objParseCommandLine.IsParameterPresent("Com") ||
                     objParseCommandLine.IsParameterPresent("Comm") ||
                     objParseCommandLine.IsParameterPresent("Comment"))
+                {
                     mOutputOptions.IncludeComment = true;
+                }
+
+                if (objParseCommandLine.IsParameterPresent("Postgres"))
+                    mOutputOptions.FormatForPostgres = true;
 
                 return true;
             }
@@ -229,15 +236,15 @@ namespace OWLDataConverter
                 Console.WriteLine();
                 Console.WriteLine("By default the output file will not include the term comments; include them with /Com or /Comment");
                 Console.WriteLine();
-                Console.WriteLine("Program written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA) in 2017");
+                Console.WriteLine("Program written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)");
                 Console.WriteLine("Version: " + GetAppVersion());
                 Console.WriteLine();
 
                 Console.WriteLine("E-mail: matthew.monroe@pnnl.gov or proteomics@pnnl.gov");
-                Console.WriteLine("Website: http://panomics.pnnl.gov/ or https://github.com/PNNL-Comp-Mass-Spec/ or https://panomics.pnnl.gov/ or https://www.pnnl.gov/integrative-omics");
+                Console.WriteLine("Website: https://github.com/PNNL-Comp-Mass-Spec/ or https://www.pnnl.gov/integrative-omics");
                 Console.WriteLine();
 
-                // Delay for 750 msec in case the user double clicked this file from within Windows Explorer (or started the program via a shortcut)
+                // Delay for 750 msec in case the user double-clicked this file from within Windows Explorer (or started the program via a shortcut)
                 System.Threading.Thread.Sleep(750);
 
             }
