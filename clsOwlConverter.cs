@@ -6,12 +6,14 @@ using System.Xml;
 
 namespace OWLDataConverter
 {
-    class clsOwlConverter : PRISM.EventNotifier
+    // ReSharper disable once InconsistentNaming
+    internal class clsOwlConverter : PRISM.EventNotifier
     {
         // Ignore Spelling: cls, Postgres, udt
 
         public const string DEFAULT_PRIMARY_KEY_SUFFIX = "BTO1";
 
+        // ReSharper disable once InconsistentNaming
         public struct udtOutputOptions
         {
             /// <summary>
@@ -45,7 +47,7 @@ namespace OWLDataConverter
 
             /// <summary>
             /// When true, use \N for null values (empty columns in the output file) and escape backslashes.
-            /// This allows the data file to be imported using the COPY command:
+            /// This allows the data file to be imported using the COPY command (while using psql)
             /// COPY ont.T_Tmp_BTO FROM '/tmp/bto.txt' WITH (FORMAT TEXT, HEADER, DELIMITER E'\t');
             /// </summary>
             public bool FormatForPostgres;
