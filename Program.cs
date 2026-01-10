@@ -21,7 +21,7 @@ namespace OWLDataConverter
         private static clsOwlConverter.udtOutputOptions mOutputOptions;
         private static string mPrimaryKeySuffix;
 
-        static int Main(string[] args)
+        static int Main()
         {
             var objParseCommandLine = new clsParseCommandLine();
 
